@@ -7,3 +7,4 @@
 - [ ] __WhereIsMyBook:__ Kütüphanemde yüzden fazla kitap var ve bazen ihtiyacım olanı bulmakta zorlanıyorum. Hangi kitabın nerede olduğunu kolayca bulabileceğim bir yol arıyorum ve bunu görsellikten uzak şekilde bir terminal uygulaması üzerinden yapabilmek istiyorum.
 - [ ] __MyTwitterRobot:__ ChatGPT kullanarak tweet yazan ve bunu paylaşan bir teknoloji hesabını oluşturan bir proje. 
 - [ ] __MyDay:__ Günlük planlayıcı yapabiliriz :) ( https://structured.app/ ) buna benzer ama daha basit, kendi adıma benim çok ihtiyacım oluyor. Özellikle görevleri yaptıktan sonra üzerini çizdiğimde garip bir şekilde motive oluyorum :-D
+- [ ] __ShortBreak__ Uzun süre bilgisayar başında vakit geçirdiğimizde bazen oturma poziyonumuzun çok bozuk olduğunu fark eder ve kendimizi toparlar dik oturur pozisyona geçeriz. Bize belirli zaman aralıklarında oturuş pozisyonumuzu düzeltmemiz ve vücudumuzu esnetmemiz için hatırlatmalarda bulunan bir uygulama. (60 dakikada bir 1 dakikalık mola)
