@@ -51,7 +51,7 @@ wimb -del 91
 # kitapları adlarına göre tersten sıralamak ve ilk 25ini getirmek için
 wimb -list name --desc 25
 # kitapları yayın tarihlerine göre sıralayıp ilk 10 dakini getirmek için
-wimb -list publis_date --asc 10
+wimb -list publish_date --asc 10
 # tüm kitapları adlarına göre sıralayarak getirmek için
 wimb -list name --asc *
 # adında 'rogramming rus' geçen kitapları getirmek için
