@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import Countdown from './components/Countdown'
 
 function App(): JSX.Element {
   const [start, setStart] = useState(false)
@@ -34,7 +35,7 @@ function App(): JSX.Element {
     // saat, dakika veya saniye degistiginde zamani durdur.
     setStart(false)
 
-    // zamanlayicinin sifirlanmasi icin gecemesi gereken toplam sure (saniye cinsinden).
+    // zamanlayicinin sifirlanmasi icin gecemesi gereken toplam sure (milisaniye cinsinden).
     const deadline =
       (hours || 0) * 60 * 60 * 1000 + (minutes || 0) * 60 * 1000 + (seconds || 0) * 1000
 
@@ -69,20 +70,7 @@ function App(): JSX.Element {
       </div>
 
       {/* Countdown */}
-      <div className="max-w-7xl px-4 my-8 tracking-tight text-blue-900 relative text-center">
-        <span className="countdown font-mono text-6xl">
-          <span
-            style={{
-              '--value': Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-            }}
-          ></span>
-          :
-          <span
-            style={{ '--value': Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60)) }}
-          ></span>
-          :<span style={{ '--value': Math.floor((remainingTime % (1000 * 60)) / 1000) }}></span>
-        </span>
-      </div>
+      <Countdown remainingTime={remainingTime} />
 
       <div className="mx-auto max-w-7xl px-4 relative">
         <input
@@ -108,5 +96,4 @@ function App(): JSX.Element {
     </div>
   )
 }
-
 export default App
