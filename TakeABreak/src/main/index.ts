@@ -1,7 +1,9 @@
-import { app, shell, BrowserWindow } from 'electron'
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
+
+const windows = new Set<BrowserWindow>()
 
 function createWindow(): void {
   // Create the browser window.
@@ -9,6 +11,12 @@ function createWindow(): void {
     width: 450,
     height: 650,
     show: false,
+    // titleBarStyle: 'hidden',
+    // titleBarOverlay: {
+    //   color: '#eef2ff',
+    //   symbolColor: '#74b1be'
+    //   // height: 60
+    // },
     autoHideMenuBar: true,
     maximizable: false,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -18,8 +26,32 @@ function createWindow(): void {
     }
   })
 
+  const child = new BrowserWindow({
+    // parent: mainWindow,
+    autoHideMenuBar: true,
+    // fullscreen: true,
+    show: false,
+    ...(process.platform === 'linux' ? { icon } : {})
+    // webPreferences: {
+    //   preload: join(__dirname, '../preload/index.js'),
+    //   sandbox: false
+    // }
+  })
+  child.loadFile(join(__dirname, '../renderer/index.html'))
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
+    windows.add(mainWindow)
+  })
+
+  mainWindow.on('closed', () => windows.delete(mainWindow))
+  child.on('closed', () => windows.delete(child))
+
+  ipcMain.handle('add-new-window', () => {
+    if (child) {
+      child.show()
+      windows.add(child)
+    }
   })
 
   mainWindow.webContents.setWindowOpenHandler((details) => {

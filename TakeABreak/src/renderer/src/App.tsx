@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Countdown from './components/Countdown'
 
+import { FaPause, FaPlay } from 'react-icons/fa'
+
 function App(): JSX.Element {
   const [start, setStart] = useState(false)
   const [remainingTime, setRemainingTime] = useState(0)
@@ -43,8 +45,12 @@ function App(): JSX.Element {
     setRemainingTime(deadline)
   }, [hours, minutes, seconds])
 
+  const func = async (): Promise<void> => {
+    // await window.api.addNewWindow()
+  }
+
   return (
-    <div className="relative pb-20 pt-10 w-full h-full">
+    <div className="relative pb-20 pt-10 w-full h-full font-mono">
       {/* Header */}
       <div className="absolute inset-0 overflow-hidden bg-indigo-50 w-full h-full">
         <img
@@ -58,10 +64,8 @@ function App(): JSX.Element {
 
       {/* Description */}
       <div className="mx-auto max-w-7xl px-4 relative">
-        <h1 className="font-display text-5xl font-bold tracking-tighter text-blue-600">
-          Take a Break
-        </h1>
-        <div className="mt-6 space-y-6 font-display text-2xl tracking-tight text-blue-900">
+        <h1 className="text-5xl font-bold tracking-tighter text-blue-600">Take a Break</h1>
+        <div className="mt-6 space-y-6 text-xl tracking-tight text-blue-900">
           <p>
             Spending long hours at the computer can affect your physical and mental health.
             Therefore, taking regular breaks is important.
@@ -72,27 +76,56 @@ function App(): JSX.Element {
       {/* Countdown */}
       <Countdown remainingTime={remainingTime} />
 
-      <div className="mx-auto max-w-7xl px-4 relative">
-        <input
-          type="number"
-          value={hours}
-          onChange={(e): void => setHours(parseInt(e.target.value))}
-        />
-        <input
-          type="number"
-          value={minutes}
-          onChange={(e): void => setMinutes(parseInt(e.target.value))}
-        />
-        <input
-          type="number"
-          value={seconds}
-          onChange={(e): void => setSeconds(parseInt(e.target.value))}
-        />
-        <button onClick={(): void => setStart(true)}>Start</button>
-        <button onClick={(): void => setStart(false)}>Stop</button>
+      <div className="text-blue-900 mx-auto max-w-7xl px-4 relative flex justify-center">
+        <div className="flex flex-col items-center ">
+          <label className="text-xl text-blue-800 ">H</label>
+          <input
+            className="shadow-lg shadow-blue-500/50 bg-transparent border-r-0 py-3 w-20 text-center text-2xl font-bold rounded-s-md focus:outline focus:outline-blue-500 outline-offset-2 outline-2"
+            type="number"
+            placeholder="H"
+            value={hours}
+            onChange={(e): void =>
+              setHours(parseInt(e.target.value) > 23 ? 23 : parseInt(e.target.value))
+            }
+          />
+        </div>
+        <div className="flex flex-col items-center ">
+          <label className="text-xl text-blue-800 ">M</label>
+          <input
+            className="shadow-lg shadow-blue-500/50 bg-transparent border-1 py-3 w-20 text-center text-2xl font-bold  focus:outline focus:outline-blue-500 outline-offset-2 outline-2"
+            type="number"
+            placeholder="M"
+            value={minutes}
+            onChange={(e): void =>
+              setMinutes(parseInt(e.target.value) > 59 ? 59 : parseInt(e.target.value))
+            }
+          />
+        </div>
+        <div className="flex flex-col items-center ">
+          <label className="text-xl text-blue-800 ">S</label>
+          <input
+            className="shadow-xl shadow-blue-500/50 bg-transparent border-l-0 py-3 w-20 text-center text-2xl font-bold rounded-r-md  focus:outline focus:outline-blue-500 outline-offset-2 outline-2"
+            placeholder="S"
+            type="number"
+            value={seconds}
+            onChange={(e): void =>
+              setSeconds(parseInt(e.target.value) > 59 ? 59 : parseInt(e.target.value))
+            }
+          />
+        </div>
       </div>
-      <div className="mx-auto max-w-7xl px-4 relative">{remainingTime}</div>
-      <div className="mx-auto max-w-7xl px-4 relative">{deadlineRef.current}</div>
+      <div className="relative flex justify-center mt-12">
+        {start ? (
+          <button className="p-2" onClick={(): void => setStart(false)}>
+            <FaPause className="text-blue-900 w-8 h-8" />
+          </button>
+        ) : (
+          <button className="p-2" onClick={(): void => setStart(true)}>
+            <FaPlay className="text-blue-900 w-8 h-8" />
+          </button>
+        )}
+        <button onClick={func}>new window</button>
+      </div>
     </div>
   )
 }
