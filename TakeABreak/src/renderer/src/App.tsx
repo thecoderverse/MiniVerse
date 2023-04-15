@@ -2,40 +2,45 @@ import React, { useEffect, useRef, useState } from 'react'
 
 function App(): JSX.Element {
   const [start, setStart] = useState(false)
-  const [deadline, setDeadline] = useState(0)
+  const [remainingTime, setRemainingTime] = useState(0)
   const [hours, setHours] = useState(0)
   const [minutes, setMinutes] = useState(0)
   const [seconds, setSeconds] = useState(0)
 
   const countdownRefId = useRef<ReturnType<typeof setInterval>>()
 
+  // hatirlaticinin baslangic suresi.
+  const deadlineRef = useRef(0)
+
+  // zamanin her saniye -1 azalmasi.
   useEffect(() => {
-    if (start) {
+    if (start && remainingTime > 0) {
       countdownRefId.current = setInterval(() => {
-        setDeadline((prev) => prev - 1000)
+        setRemainingTime((prev) => prev - 1000)
+      }, 1000)
+    } else if (start && remainingTime <= 0) {
+      // saniye 01 oldugunda aniden baslangic zamanina donmemesi icin ekstra 1 saniye daha bekliyoruz.
+      // Bu sayede saniye 00 olduktan sonra baslangic zamanina doner.
+      setTimeout(() => {
+        setRemainingTime(deadlineRef.current)
       }, 1000)
     }
+    // component unmount oldugunda interval objesinin de hafizadan ucurulmasi.
     return () => clearInterval(countdownRefId.current)
-  }, [start, deadline])
+  }, [start, remainingTime])
 
+  // hatirlaticinin baslangic suresinin hesaplanmasi.
   useEffect(() => {
-    setDeadline((hours || 0) * 60 * 60 * 1000 + (minutes || 0) * 60 * 1000 + (seconds || 0) * 1000)
+    // saat, dakika veya saniye degistiginde zamani durdur.
+    setStart(false)
+
+    // zamanlayicinin sifirlanmasi icin gecemesi gereken toplam sure (saniye cinsinden).
+    const deadline =
+      (hours || 0) * 60 * 60 * 1000 + (minutes || 0) * 60 * 1000 + (seconds || 0) * 1000
+
+    deadlineRef.current = deadline
+    setRemainingTime(deadline)
   }, [hours, minutes, seconds])
-
-  const hoursChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setStart(false)
-    setHours(parseInt(e.target.value))
-  }
-
-  const minutesChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setStart(false)
-    setMinutes(parseInt(e.target.value))
-  }
-
-  const secondsChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setStart(false)
-    setSeconds(parseInt(e.target.value))
-  }
 
   return (
     <div className="relative pb-20 pt-10 w-full h-full">
@@ -67,24 +72,39 @@ function App(): JSX.Element {
       <div className="max-w-7xl px-4 my-8 tracking-tight text-blue-900 relative text-center">
         <span className="countdown font-mono text-6xl">
           <span
-            style={{ '--value': Math.floor((deadline % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) }}
+            style={{
+              '--value': Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+            }}
           ></span>
           :
           <span
-            style={{ '--value': Math.floor((deadline % (1000 * 60 * 60)) / (1000 * 60)) }}
+            style={{ '--value': Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60)) }}
           ></span>
-          :<span style={{ '--value': Math.floor((deadline % (1000 * 60)) / 1000) }}></span>
+          :<span style={{ '--value': Math.floor((remainingTime % (1000 * 60)) / 1000) }}></span>
         </span>
       </div>
 
       <div className="mx-auto max-w-7xl px-4 relative">
-        <input type="number" value={hours} onChange={hoursChangeHandler} />
-        <input type="number" value={minutes} onChange={minutesChangeHandler} />
-        <input type="number" value={seconds} onChange={secondsChangeHandler} />
+        <input
+          type="number"
+          value={hours}
+          onChange={(e): void => setHours(parseInt(e.target.value))}
+        />
+        <input
+          type="number"
+          value={minutes}
+          onChange={(e): void => setMinutes(parseInt(e.target.value))}
+        />
+        <input
+          type="number"
+          value={seconds}
+          onChange={(e): void => setSeconds(parseInt(e.target.value))}
+        />
         <button onClick={(): void => setStart(true)}>Start</button>
         <button onClick={(): void => setStart(false)}>Stop</button>
       </div>
-      <div className="mx-auto max-w-7xl px-4 relative">{deadline}</div>
+      <div className="mx-auto max-w-7xl px-4 relative">{remainingTime}</div>
+      <div className="mx-auto max-w-7xl px-4 relative">{deadlineRef.current}</div>
     </div>
   )
 }
