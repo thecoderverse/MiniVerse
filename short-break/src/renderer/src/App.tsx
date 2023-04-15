@@ -1,4 +1,42 @@
+import React, { useEffect, useRef, useState } from 'react'
+
 function App(): JSX.Element {
+  const [start, setStart] = useState(false)
+  const [deadline, setDeadline] = useState(0)
+  const [hours, setHours] = useState(0)
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+
+  const countdownRefId = useRef<ReturnType<typeof setInterval>>()
+
+  useEffect(() => {
+    if (start) {
+      countdownRefId.current = setInterval(() => {
+        setDeadline((prev) => prev - 1000)
+      }, 1000)
+    }
+    return () => clearInterval(countdownRefId.current)
+  }, [start, deadline])
+
+  useEffect(() => {
+    setDeadline((hours || 0) * 60 * 60 * 1000 + (minutes || 0) * 60 * 1000 + (seconds || 0) * 1000)
+  }, [hours, minutes, seconds])
+
+  const hoursChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setStart(false)
+    setHours(parseInt(e.target.value))
+  }
+
+  const minutesChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setStart(false)
+    setMinutes(parseInt(e.target.value))
+  }
+
+  const secondsChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    setStart(false)
+    setSeconds(parseInt(e.target.value))
+  }
+
   return (
     <div className="relative pb-20 pt-10 w-full h-full">
       {/* Header */}
@@ -26,9 +64,27 @@ function App(): JSX.Element {
       </div>
 
       {/* Countdown */}
-      <div className="max-w-7xl px-4 my-8 text-8xl tracking-tight text-blue-900 relative text-center">
-        01:55:24
+      <div className="max-w-7xl px-4 my-8 tracking-tight text-blue-900 relative text-center">
+        <span className="countdown font-mono text-6xl">
+          <span
+            style={{ '--value': Math.floor((deadline % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) }}
+          ></span>
+          :
+          <span
+            style={{ '--value': Math.floor((deadline % (1000 * 60 * 60)) / (1000 * 60)) }}
+          ></span>
+          :<span style={{ '--value': Math.floor((deadline % (1000 * 60)) / 1000) }}></span>
+        </span>
       </div>
+
+      <div className="mx-auto max-w-7xl px-4 relative">
+        <input type="number" value={hours} onChange={hoursChangeHandler} />
+        <input type="number" value={minutes} onChange={minutesChangeHandler} />
+        <input type="number" value={seconds} onChange={secondsChangeHandler} />
+        <button onClick={(): void => setStart(true)}>Start</button>
+        <button onClick={(): void => setStart(false)}>Stop</button>
+      </div>
+      <div className="mx-auto max-w-7xl px-4 relative">{deadline}</div>
     </div>
   )
 }
