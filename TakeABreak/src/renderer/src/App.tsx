@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import Countdown from './components/Countdown'
 
 import { FaPause, FaPlay } from 'react-icons/fa'
+import Titlebar from './components/Titlebar'
 
 function App(): JSX.Element {
   const [start, setStart] = useState(false)
@@ -50,7 +51,7 @@ function App(): JSX.Element {
   }
 
   return (
-    <div className="relative pb-20 pt-10 w-full h-full font-mono">
+    <div className="relative pb-20 h-full font-mono">
       {/* Header */}
       <div className="absolute inset-0 overflow-hidden bg-indigo-50 w-full h-full">
         <img
@@ -62,8 +63,10 @@ function App(): JSX.Element {
         <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white"></div>
       </div>
 
+      <Titlebar />
+
       {/* Description */}
-      <div className="mx-auto max-w-7xl px-4 relative">
+      <div className="mx-auto p-4 relative">
         <h1 className="text-5xl font-bold tracking-tighter text-blue-600">Take a Break</h1>
         <div className="mt-6 space-y-6 text-xl tracking-tight text-blue-900">
           <p>
@@ -76,7 +79,7 @@ function App(): JSX.Element {
       {/* Countdown */}
       <Countdown remainingTime={remainingTime} />
 
-      <div className="text-blue-900 mx-auto max-w-7xl px-4 relative flex justify-center">
+      <div className="text-blue-900 mx-auto px-4 relative flex justify-center">
         <div className="flex flex-col items-center ">
           <label className="text-xl text-blue-800 ">H</label>
           <input

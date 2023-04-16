@@ -4,7 +4,7 @@ type CountdownProps = {
 
 const Countdown = ({ remainingTime }: CountdownProps): JSX.Element => {
   return (
-    <div className="max-w-7xl px-4 my-8 tracking-tight text-blue-900 relative text-center">
+    <div className="px-4 my-8 tracking-tight text-blue-900 relative text-center">
       <span className="countdown text-7xl">
         <span
           style={{
