@@ -127,7 +127,7 @@ function App(): JSX.Element {
             <FaPlay className="text-blue-900 w-8 h-8" />
           </button>
         )}
-        <button onClick={func}>new window</button>
+        {/* <button onClick={func}>new window</button> */}
       </div>
     </div>
   )
