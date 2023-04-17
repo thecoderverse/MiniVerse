@@ -10,3 +10,10 @@
 - [ ] __ShortBreak__ Uzun süre bilgisayar başında vakit geçirdiğimizde bazen oturma poziyonumuzun çok bozuk olduğunu fark eder ve kendimizi toparlar dik oturur pozisyona geçeriz. Bize belirli zaman aralıklarında oturuş pozisyonumuzu düzeltmemiz ve vücudumuzu esnetmemiz için hatırlatmalarda bulunan bir uygulama. (60 dakikada bir 1 dakikalık mola)
 - [ ] __Futuresite__ Futureverse community'sinin çalışmalarını yapacağı ve yazdıkları dokümanları paylaşabileceği SPA platformlar bütünü.
 - [ ] __Satisaction__ Futuresite projesinin Github Actions kullanarak CI/CD süreçlerini otomatikleştirme çalışması. (Ve bunun yapımı hakkında bir session oluşturup Github Actions'ı ve CI/CD süreçlerini topluluğa aktarmak.)
+- [ ] __TomatoVerse__ Sınav süreçlerinde kullanmaya alışacağımız sonrasında ise kütüphane ortamı gibi buluşup pomodoro tekniği ile ortak çalışacağımız bir Discord kanalı oluşturmak ve burada süreyi otomatize etmek için bir Discord botu yazmak.
+
+## Katılım
+Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
+
+## Lisans
+Bu proje MIT Lisance ile lisanslanmıştır. Lisansın tam metnine [LICENSE](LICENSE) adresinden erişebilirsiniz.
