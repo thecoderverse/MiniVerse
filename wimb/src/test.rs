@@ -1,6 +1,7 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
+    use crate::model::{Author, Book, Location};
     use std::str::FromStr;
 
     #[test]
@@ -46,6 +47,13 @@ mod test {
     }
 
     #[test]
+    fn should_convert_to_help_works() {
+        let command = "-help";
+        let actual = Command::from_str(command);
+        assert_eq!(actual, Ok(Command::Help));
+    }
+
+    #[test]
     fn should_convert_to_list_works() {
         let command = "-list";
         let actual = Command::from_str(command);
@@ -88,5 +96,20 @@ mod test {
             actual,
             Ok(ListCommand::init("name".to_string(), Order::Desc, 10))
         );
+    }
+
+    #[test]
+    fn should_create_a_book_works() {
+        let authors = vec![
+            Author("Saurabh Shrivastava".to_string()),
+            Author("Neenlanjali Srivastav".to_string()),
+        ];
+        let book = Book::new(
+            "Solutions Architect's Handbook".to_string(),
+            authors,
+            "Packt".to_string(),
+            Location::new(2, 4, 8),
+        );
+        assert_eq!(book.to_string(), "Solutions Architect's Handbook,(2:4:8)");
     }
 }

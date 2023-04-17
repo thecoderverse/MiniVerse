@@ -11,6 +11,8 @@ pub enum Command {
     List(ListCommand),
     /// Girilen kitabı arama
     Find(String),
+    /// Nasıl kullanıldığı ile ilgili yardım içeriği
+    Help,
 }
 
 impl FromStr for Command {
@@ -22,6 +24,7 @@ impl FromStr for Command {
             "-list" => Ok(Command::List(ListCommand::default())),
             "-del" => Ok(Command::Del(u32::default())),
             "-find" => Ok(Command::Find(String::new())),
+            "-help" => Ok(Command::Help),
             _ => Err(ParseError::Command),
         }
     }
