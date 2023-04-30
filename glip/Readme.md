@@ -1,4 +1,4 @@
-# glimp _(Get Lorem Picsum Photo)_
+# glip _(Get Lorem Picsum Photo)_
 
 Popüler bir lorem ipsum türü olan [bu siteden](https://picsum.photos/) basit REST sorguları ile Unsplash kaynaklı fotoğraflar çekmek mümkün. Bir uygulamada rastgele fotoğraflara ihtiyacımız olduğu hallerde kullanımı ideal. Örnek uygulamada bu siteye basit REST sorguları gönderip fotoğrafların local bilgisayar ortamına JPG olarak indirilmesi söz konusu.
 

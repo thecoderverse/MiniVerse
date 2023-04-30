@@ -11,7 +11,7 @@
 - [ ] __Futuresite__ Futureverse community'sinin çalışmalarını yapacağı ve yazdıkları dokümanları paylaşabileceği SPA platformlar bütünü.
 - [ ] __Satisaction__ Futuresite projesinin Github Actions kullanarak CI/CD süreçlerini otomatikleştirme çalışması. (Ve bunun yapımı hakkında bir session oluşturup Github Actions'ı ve CI/CD süreçlerini topluluğa aktarmak.)
 - [ ] __TomatoVerse__ Sınav süreçlerinde kullanmaya alışacağımız sonrasında ise kütüphane ortamı gibi buluşup pomodoro tekniği ile ortak çalışacağımız bir Discord kanalı oluşturmak ve burada süreyi otomatize etmek için bir Discord botu yazmak.
-- [x] __glimp__ Lorem Picsum rest servislerini kullanarak bilgisayar fotoğraf/fotoğraflar indiren RUST tabanlı terminal uygulaması.
+- [x] __glip__ Lorem Picsum rest servislerini kullanarak bilgisayar fotoğraf/fotoğraflar indiren RUST tabanlı terminal uygulaması.
 
 ## Katılım
 Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
