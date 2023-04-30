@@ -3,7 +3,7 @@ mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
     use crate::db::{insert_book, open_connection};
     use crate::mapper::get_authors;
-    use crate::model::{AuthorModel, BookModel, LocationModel};
+    use crate::model::{AuthorModel, Book, BookModel, LocationModel};
     use std::str::FromStr;
 
     #[test]
@@ -132,9 +132,9 @@ mod test {
     }
 
     #[test]
-    fn should_insert_to_db_works() {
+    fn should_insert_from_model_to_db_works() {
         let conn = &mut open_connection();
-        let book = BookModel::new(
+        let book_model = BookModel::new(
             "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
             vec![
                 AuthorModel("Steve Resnick".to_string()),
@@ -144,7 +144,17 @@ mod test {
             "Packt Publishing".to_string(),
             LocationModel::new(1, 2, 3),
         );
-        let inserted = insert_book(conn, book);
+        let author_names = get_authors(&book_model);
+        let book = Book {
+            id: 0,
+            title: book_model.title,
+            authors: author_names,
+            publisher: book_model.publisher,
+            column: book_model.location.column,
+            row: book_model.location.row,
+            order: book_model.location.order,
+        };
+        let inserted = insert_book(conn, &book);
         assert_eq!(inserted, 1);
     }
 }

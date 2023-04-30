@@ -1,4 +1,4 @@
-use crate::model::{BookModel};
+use crate::model::BookModel;
 
 pub fn get_authors(book: &BookModel) -> String {
     let mut authors = String::new();

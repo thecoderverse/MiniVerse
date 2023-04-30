@@ -1,5 +1,6 @@
+use crate::schema::books;
+use diesel::{Insertable, Queryable};
 use std::fmt::{Display, Formatter};
-use diesel::Queryable;
 
 pub struct LocationModel {
     pub column: i16,
@@ -9,7 +10,6 @@ pub struct LocationModel {
 
 pub struct AuthorModel(pub String);
 
-#[derive(Queryable)]
 pub struct BookModel {
     pub title: String,
     pub authors: Vec<AuthorModel>,
@@ -51,14 +51,14 @@ impl Display for BookModel {
     }
 }
 
-// #[derive(Insertable)]
-// #[diesel(table_name=books)]
-// pub struct Book {
-//     pub id: i32,
-//     pub title: String,
-//     pub authors: String,
-//     pub publisher: String,
-//     pub column: i16,
-//     pub row: i16,
-//     pub order: i16,
-// }
+#[derive(Insertable, Queryable)]
+#[diesel(table_name = books)]
+pub struct Book {
+    pub id: i32,
+    pub title: String,
+    pub authors: String,
+    pub publisher: String,
+    pub column: i16,
+    pub row: i16,
+    pub order: i16,
+}
