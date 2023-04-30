@@ -1,22 +1,24 @@
 use std::fmt::{Display, Formatter};
+use diesel::Queryable;
 
 pub struct LocationModel {
-    column: i32,
-    row: i32,
-    order: i32,
+    pub column: i16,
+    pub row: i16,
+    pub order: i16,
 }
 
 pub struct AuthorModel(pub String);
 
+#[derive(Queryable)]
 pub struct BookModel {
-    title: String,
-    authors: Vec<AuthorModel>,
-    publisher: String,
-    location: LocationModel,
+    pub title: String,
+    pub authors: Vec<AuthorModel>,
+    pub publisher: String,
+    pub location: LocationModel,
 }
 
 impl LocationModel {
-    pub fn new(column: i32, row: i32, order: i32) -> Self {
+    pub fn new(column: i16, row: i16, order: i16) -> Self {
         Self { column, row, order }
     }
 }

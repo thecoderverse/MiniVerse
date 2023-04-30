@@ -1,6 +1,8 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
+    use crate::db::{insert_book, open_connection};
+    use crate::mapper::get_authors;
     use crate::model::{AuthorModel, BookModel, LocationModel};
     use std::str::FromStr;
 
@@ -111,5 +113,38 @@ mod test {
             LocationModel::new(2, 4, 8),
         );
         assert_eq!(book.to_string(), "Solutions Architect's Handbook,(2:4:8)");
+    }
+
+    #[test]
+    fn should_authors_convert_to_single_string_works() {
+        let book = BookModel::new(
+            "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            vec![
+                AuthorModel("Steve Resnick".to_string()),
+                AuthorModel("Richard Crane".to_string()),
+                AuthorModel("Chris Bowen".to_string()),
+            ],
+            "Packt Publishing".to_string(),
+            LocationModel::new(1, 2, 3),
+        );
+        let authors = get_authors(&book);
+        assert_eq!(authors, "Steve Resnick,Richard Crane,Chris Bowen,");
+    }
+
+    #[test]
+    fn should_insert_to_db_works() {
+        let conn = &mut open_connection();
+        let book = BookModel::new(
+            "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            vec![
+                AuthorModel("Steve Resnick".to_string()),
+                AuthorModel("Richard Crane".to_string()),
+                AuthorModel("Chris Bowen".to_string()),
+            ],
+            "Packt Publishing".to_string(),
+            LocationModel::new(1, 2, 3),
+        );
+        let inserted = insert_book(conn, book);
+        assert_eq!(inserted, 1);
     }
 }

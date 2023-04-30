@@ -5,10 +5,12 @@ use std::process::exit;
 use std::str::FromStr;
 
 mod command;
+mod db;
 mod guide;
+mod mapper;
 mod model;
-mod test;
 mod schema;
+mod test;
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
