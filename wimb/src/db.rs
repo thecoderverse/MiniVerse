@@ -1,4 +1,4 @@
-use crate::model::Book;
+use crate::model::{BookInsert, BookSelect};
 use crate::schema::books::dsl::books;
 use diesel::{Connection, RunQueryDsl, SqliteConnection};
 use dotenvy::dotenv;
@@ -11,9 +11,15 @@ pub fn open_connection() -> SqliteConnection {
         .unwrap_or_else(|_| panic!("{} veritabanına bağlanılamadı", database_url))
 }
 
-pub fn insert_book(conn: &mut SqliteConnection, book: &Book) -> usize {
+pub fn insert_book(conn: &mut SqliteConnection, book: &BookInsert) -> usize {
     diesel::insert_into(books)
         .values(book)
         .execute(conn)
         .expect("Db'ye kitap eklenirken hata oluştu.")
+}
+
+pub fn load_all_books(conn: &mut SqliteConnection) -> Vec<BookSelect> {
+    books
+        .load::<BookSelect>(conn)
+        .expect("Kitaplar yüklenemedi")
 }

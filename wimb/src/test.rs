@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
-    use crate::db::{insert_book, open_connection};
+    use crate::db::{insert_book, load_all_books, open_connection};
     use crate::mapper::get_authors;
-    use crate::model::{AuthorModel, Book, BookModel, LocationModel};
+    use crate::model::{Author, Book, BookInsert, Location};
     use std::str::FromStr;
 
     #[test]
@@ -103,29 +103,29 @@ mod test {
     #[test]
     fn should_create_a_book_works() {
         let authors = vec![
-            AuthorModel("Saurabh Shrivastava".to_string()),
-            AuthorModel("Neenlanjali Srivastav".to_string()),
+            Author("Saurabh Shrivastava".to_string()),
+            Author("Neenlanjali Srivastav".to_string()),
         ];
-        let book = BookModel::new(
+        let book = Book::new(
             "Solutions Architect's Handbook".to_string(),
             authors,
             "Packt".to_string(),
-            LocationModel::new(2, 4, 8),
+            Location::new(2, 4, 8),
         );
         assert_eq!(book.to_string(), "Solutions Architect's Handbook,(2:4:8)");
     }
 
     #[test]
     fn should_authors_convert_to_single_string_works() {
-        let book = BookModel::new(
+        let book = Book::new(
             "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
             vec![
-                AuthorModel("Steve Resnick".to_string()),
-                AuthorModel("Richard Crane".to_string()),
-                AuthorModel("Chris Bowen".to_string()),
+                Author("Steve Resnick".to_string()),
+                Author("Richard Crane".to_string()),
+                Author("Chris Bowen".to_string()),
             ],
             "Packt Publishing".to_string(),
-            LocationModel::new(1, 2, 3),
+            Location::new(1, 2, 3),
         );
         let authors = get_authors(&book);
         assert_eq!(authors, "Steve Resnick,Richard Crane,Chris Bowen,");
@@ -134,19 +134,18 @@ mod test {
     #[test]
     fn should_insert_from_model_to_db_works() {
         let conn = &mut open_connection();
-        let book_model = BookModel::new(
+        let book_model = Book::new(
             "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
             vec![
-                AuthorModel("Steve Resnick".to_string()),
-                AuthorModel("Richard Crane".to_string()),
-                AuthorModel("Chris Bowen".to_string()),
+                Author("Steve Resnick".to_string()),
+                Author("Richard Crane".to_string()),
+                Author("Chris Bowen".to_string()),
             ],
             "Packt Publishing".to_string(),
-            LocationModel::new(1, 2, 3),
+            Location::new(1, 2, 3),
         );
         let author_names = get_authors(&book_model);
-        let book = Book {
-            id: 0,
+        let book = BookInsert {
             title: book_model.title,
             authors: author_names,
             publisher: book_model.publisher,
@@ -156,5 +155,12 @@ mod test {
         };
         let inserted = insert_book(conn, &book);
         assert_eq!(inserted, 1);
+    }
+
+    #[test]
+    fn should_load_all_books_works() {
+        let conn = &mut open_connection();
+        let accepted = load_all_books(conn);
+        assert!(accepted.len() > 0);
     }
 }

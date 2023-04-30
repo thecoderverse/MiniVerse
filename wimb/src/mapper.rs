@@ -1,6 +1,6 @@
-use crate::model::BookModel;
+use crate::model::Book;
 
-pub fn get_authors(book: &BookModel) -> String {
+pub fn get_authors(book: &Book) -> String {
     let mut authors = String::new();
     for a in book.authors.iter() {
         authors += format!("{},", a.0.as_str()).as_str();
