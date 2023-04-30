@@ -1,3 +1,4 @@
+use std::fmt::{Display, Formatter};
 use std::str::FromStr;
 
 /// - ile başlayan komutları karşılar
@@ -109,6 +110,19 @@ pub enum ParseError {
     Order,
     /// Geçersiz komut hatası
     Command,
+}
+
+impl Display for ParseError {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            ParseError::Order => {
+                write!(f, "Parametre sıraları hatalı")
+            }
+            ParseError::Command => {
+                write!(f, "Komut anlaşılamadı")
+            }
+        }
+    }
 }
 
 /// -list komut ardından gelen parametreler ile ilgili hatalar

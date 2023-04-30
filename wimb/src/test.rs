@@ -1,7 +1,9 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
-    use crate::model::{Author, Book, Location};
+    use crate::db::{insert_book, load_all_books, open_connection};
+    use crate::mapper::get_authors;
+    use crate::model::{Author, Book, BookInsert, Location};
     use std::str::FromStr;
 
     #[test]
@@ -111,5 +113,54 @@ mod test {
             Location::new(2, 4, 8),
         );
         assert_eq!(book.to_string(), "Solutions Architect's Handbook,(2:4:8)");
+    }
+
+    #[test]
+    fn should_authors_convert_to_single_string_works() {
+        let book = Book::new(
+            "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            vec![
+                Author("Steve Resnick".to_string()),
+                Author("Richard Crane".to_string()),
+                Author("Chris Bowen".to_string()),
+            ],
+            "Packt Publishing".to_string(),
+            Location::new(1, 2, 3),
+        );
+        let authors = get_authors(&book);
+        assert_eq!(authors, "Steve Resnick,Richard Crane,Chris Bowen,");
+    }
+
+    #[test]
+    fn should_insert_from_model_to_db_works() {
+        let conn = &mut open_connection();
+        let book_model = Book::new(
+            "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            vec![
+                Author("Steve Resnick".to_string()),
+                Author("Richard Crane".to_string()),
+                Author("Chris Bowen".to_string()),
+            ],
+            "Packt Publishing".to_string(),
+            Location::new(1, 2, 3),
+        );
+        let author_names = get_authors(&book_model);
+        let book = BookInsert {
+            title: book_model.title,
+            authors: author_names,
+            publisher: book_model.publisher,
+            column: book_model.location.column,
+            row: book_model.location.row,
+            order: book_model.location.order,
+        };
+        let inserted = insert_book(conn, &book);
+        assert_eq!(inserted, 1);
+    }
+
+    #[test]
+    fn should_load_all_books_works() {
+        let conn = &mut open_connection();
+        let accepted = load_all_books(conn);
+        assert!(accepted.len() > 0);
     }
 }
