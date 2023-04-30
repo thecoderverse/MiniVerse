@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
-    use crate::model::{Author, Book, Location};
+    use crate::model::{AuthorModel, BookModel, LocationModel};
     use std::str::FromStr;
 
     #[test]
@@ -101,14 +101,14 @@ mod test {
     #[test]
     fn should_create_a_book_works() {
         let authors = vec![
-            Author("Saurabh Shrivastava".to_string()),
-            Author("Neenlanjali Srivastav".to_string()),
+            AuthorModel("Saurabh Shrivastava".to_string()),
+            AuthorModel("Neenlanjali Srivastav".to_string()),
         ];
-        let book = Book::new(
+        let book = BookModel::new(
             "Solutions Architect's Handbook".to_string(),
             authors,
             "Packt".to_string(),
-            Location::new(2, 4, 8),
+            LocationModel::new(2, 4, 8),
         );
         assert_eq!(book.to_string(), "Solutions Architect's Handbook,(2:4:8)");
     }

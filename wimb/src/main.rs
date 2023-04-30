@@ -8,6 +8,7 @@ mod command;
 mod guide;
 mod model;
 mod test;
+mod schema;
 
 fn main() {
     let arguments: Vec<String> = env::args().collect();
