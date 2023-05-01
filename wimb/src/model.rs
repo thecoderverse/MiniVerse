@@ -2,7 +2,7 @@ use crate::schema::books;
 use diesel::{Insertable, Queryable};
 use std::fmt::{Display, Formatter};
 
-#[derive(PartialEq,Debug)]
+#[derive(PartialEq, Debug)]
 pub struct Location {
     pub column: i16,
     pub row: i16,
