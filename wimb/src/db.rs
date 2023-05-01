@@ -1,6 +1,7 @@
 use crate::model::{BookInsert, BookSelect};
 use crate::schema::books::dsl::books;
-use diesel::{Connection, RunQueryDsl, SqliteConnection};
+use crate::schema::books::title;
+use diesel::{Connection, QueryDsl, RunQueryDsl, SqliteConnection, TextExpressionMethods};
 use dotenvy::dotenv;
 use std::env;
 
@@ -22,4 +23,12 @@ pub fn load_all_books(conn: &mut SqliteConnection) -> Vec<BookSelect> {
     books
         .load::<BookSelect>(conn)
         .expect("Kitaplar yüklenemedi")
+}
+
+pub fn find_books(conn: &mut SqliteConnection, book_name: String) -> Vec<BookSelect> {
+    let like_value = format!("%{}%", book_name);
+    books
+        .filter(title.like(like_value))
+        .load::<BookSelect>(conn)
+        .expect("Kitaplar bulunamadı")
 }
