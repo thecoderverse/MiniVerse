@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
-    use crate::db::{find_books, insert_book, load_all_books, open_connection};
+    use crate::db::{find_books, insert_book, load_all_books};
     use crate::mapper::{get_authors, get_authors_from_string};
     use crate::model::{Author, Book, BookInsert, BookSelect, Location};
     use std::str::FromStr;
@@ -133,7 +133,6 @@ mod test {
 
     #[test]
     fn should_insert_from_model_to_db_works() {
-        let conn = &mut open_connection();
         let book_model = Book::new(
             "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
             vec![
@@ -153,21 +152,19 @@ mod test {
             row: book_model.location.row,
             order: book_model.location.order,
         };
-        let inserted = insert_book(conn, &book);
+        let inserted = insert_book(&book);
         assert_eq!(inserted, 1);
     }
 
     #[test]
     fn should_load_all_books_works() {
-        let conn = &mut open_connection();
-        let expected = load_all_books(conn);
+        let expected = load_all_books();
         assert!(expected.len() > 0);
     }
 
     #[test]
     fn should_filter_books_by_name_works() {
-        let conn = &mut open_connection();
-        let expected = find_books(conn, "Windows".to_string());
+        let expected = find_books("Windows".to_string());
         assert!(expected.len() > 0);
     }
 
