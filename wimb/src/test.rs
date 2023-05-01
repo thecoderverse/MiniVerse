@@ -1,9 +1,9 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
-    use crate::db::{insert_book, load_all_books, open_connection};
-    use crate::mapper::get_authors;
-    use crate::model::{Author, Book, BookInsert, Location};
+    use crate::db::{find_books, insert_book, load_all_books, open_connection};
+    use crate::mapper::{get_authors, get_authors_from_string};
+    use crate::model::{Author, Book, BookInsert, BookSelect, Location};
     use std::str::FromStr;
 
     #[test]
@@ -160,7 +160,47 @@ mod test {
     #[test]
     fn should_load_all_books_works() {
         let conn = &mut open_connection();
-        let accepted = load_all_books(conn);
-        assert!(accepted.len() > 0);
+        let expected = load_all_books(conn);
+        assert!(expected.len() > 0);
+    }
+
+    #[test]
+    fn should_filter_books_by_name_works() {
+        let conn = &mut open_connection();
+        let expected = find_books(conn, "Windows".to_string());
+        assert!(expected.len() > 0);
+    }
+
+    #[test]
+    fn should_get_authors_from_string_works() {
+        let source = "Steve Resnick,Richard Crane,Packt Publishing,".to_string();
+        let expected = get_authors_from_string(source);
+        assert_eq!(expected.len(), 3);
+        assert_eq!(expected[0].0, "Steve Resnick");
+        assert_eq!(expected[1].0, "Richard Crane");
+        assert_eq!(expected[2].0, "Packt Publishing");
+    }
+
+    #[test]
+    fn should_from_bookselect_to_book_mapper_works() {
+        let source = BookSelect {
+            id: 19,
+            title: "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            authors: "Steve Resnick,Richard Crane,Packt Publishing,".to_string(),
+            publisher: "Packt Publishing".to_string(),
+            column: 1,
+            row: 2,
+            order: 3,
+        };
+
+        let book = Book::from(source);
+        assert_eq!(
+            book.title,
+            "Essential Windows Communication Foundation for .Net Framework 3.5"
+        );
+        assert_eq!(book.location, Location::new(1, 2, 3));
+        assert_eq!(book.authors.len(), 3);
+        assert_eq!(book.authors[0].0, "Steve Resnick");
+        assert_eq!(book.publisher, "Packt Publishing");
     }
 }
