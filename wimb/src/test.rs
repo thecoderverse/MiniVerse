@@ -1,7 +1,9 @@
 #[cfg(test)]
 mod test {
     use crate::command::{Command, ListCommand, ListCommandParseError, Order, ParseError};
-    use crate::model::{Author, Book, Location};
+    use crate::db::{find_books, insert_book, load_all_books};
+    use crate::mapper::{get_authors, get_authors_from_string};
+    use crate::model::{Author, Book, BookInsert, BookSelect, Location};
     use std::str::FromStr;
 
     #[test]
@@ -111,5 +113,114 @@ mod test {
             Location::new(2, 4, 8),
         );
         assert_eq!(book.to_string(), "Solutions Architect's Handbook,(2:4:8)");
+    }
+
+    #[test]
+    fn should_authors_convert_to_single_string_works() {
+        let book = Book::new(
+            "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            vec![
+                Author("Steve Resnick".to_string()),
+                Author("Richard Crane".to_string()),
+                Author("Chris Bowen".to_string()),
+            ],
+            "Packt Publishing".to_string(),
+            Location::new(1, 2, 3),
+        );
+        let authors = get_authors(book.authors);
+        assert_eq!(authors, "Steve Resnick,Richard Crane,Chris Bowen,");
+    }
+
+    #[test]
+    fn should_insert_from_model_to_db_works() {
+        let book_model = Book::new(
+            "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            vec![
+                Author("Steve Resnick".to_string()),
+                Author("Richard Crane".to_string()),
+                Author("Chris Bowen".to_string()),
+            ],
+            "Packt Publishing".to_string(),
+            Location::new(1, 2, 3),
+        );
+        let author_names = get_authors(book_model.authors);
+        let book = BookInsert {
+            title: book_model.title,
+            authors: author_names,
+            publisher: book_model.publisher,
+            column: book_model.location.column,
+            row: book_model.location.row,
+            order: book_model.location.order,
+        };
+        let inserted = insert_book(&book);
+        assert_eq!(inserted, 1);
+    }
+
+    #[test]
+    fn should_load_all_books_works() {
+        let expected = load_all_books();
+        assert!(expected.len() > 0);
+    }
+
+    #[test]
+    fn should_filter_books_by_name_works() {
+        let expected = find_books("Windows".to_string());
+        assert!(expected.len() > 0);
+    }
+
+    #[test]
+    fn should_get_authors_from_string_works() {
+        let source = "Steve Resnick,Richard Crane,Chris Bowen,".to_string();
+        let expected = get_authors_from_string(source);
+        assert_eq!(expected.len(), 3);
+        assert_eq!(expected[0].0, "Steve Resnick");
+        assert_eq!(expected[1].0, "Richard Crane");
+        assert_eq!(expected[2].0, "Chris Bowen");
+    }
+
+    #[test]
+    fn should_from_bookselect_to_book_mapper_works() {
+        let source = BookSelect {
+            id: 19,
+            title: "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            authors: "Steve Resnick,Richard Crane,Chris Bowen,".to_string(),
+            publisher: "Packt Publishing".to_string(),
+            column: 1,
+            row: 2,
+            order: 3,
+        };
+
+        let book = Book::from(source);
+        assert_eq!(
+            book.title,
+            "Essential Windows Communication Foundation for .Net Framework 3.5"
+        );
+        assert_eq!(book.location, Location::new(1, 2, 3));
+        assert_eq!(book.authors.len(), 3);
+        assert_eq!(book.authors[0].0, "Steve Resnick");
+        assert_eq!(book.publisher, "Packt Publishing");
+    }
+
+    #[test]
+    fn should_from_book_to_bookinsert_works() {
+        let source = Book::new(
+            "Essential Windows Communication Foundation for .Net Framework 3.5".to_string(),
+            vec![
+                Author("Steve Resnick".to_string()),
+                Author("Richard Crane".to_string()),
+                Author("Chris Bowen".to_string()),
+            ],
+            "Packt Publishing".to_string(),
+            Location::new(1, 2, 3),
+        );
+        let expected = BookInsert::from(source);
+        assert_eq!(expected.column, 1);
+        assert_eq!(expected.row, 2);
+        assert_eq!(expected.order, 3);
+        assert_eq!(
+            expected.title,
+            "Essential Windows Communication Foundation for .Net Framework 3.5"
+        );
+        assert_eq!(expected.authors, "Steve Resnick,Richard Crane,Chris Bowen,");
     }
 }

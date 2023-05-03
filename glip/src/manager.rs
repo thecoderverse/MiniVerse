@@ -200,10 +200,13 @@ pub fn show_help() {
             Örnek Kullanımlar;
 
             -- Belli bir ID için
-            get-lorem-picsum single 123
+            ./glip single 123
 
             -- 3ncü sayfadan itibaren 10 kayıt için
-            get-lorem-picsum many 3 10
+            ./glip many 3 10
+
+            -- random bir fotoğraf için
+            ./glip random
             ";
     println!("{}", help_text);
     exit(1);
