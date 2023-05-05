@@ -6,6 +6,8 @@ use std::str::FromStr;
 pub enum Command {
     /// Yeni kitap ekleme
     Add,
+    /// Tüm kitapları listelemek için
+    All,
     /// Id değerine göre kitap silme
     Del(u32),
     /// Kitapları listeleme
@@ -23,6 +25,7 @@ impl FromStr for Command {
         match s {
             "-add" => Ok(Command::Add),
             "-list" => Ok(Command::List(ListCommand::default())),
+            "-all" => Ok(Command::All),
             "-del" => Ok(Command::Del(u32::default())),
             "-find" => Ok(Command::Find(String::new())),
             "-help" => Ok(Command::Help),
