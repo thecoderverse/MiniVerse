@@ -27,7 +27,7 @@ pub fn load_all_books() -> Vec<BookSelect> {
         .expect("Kitaplar yüklenemedi")
 }
 
-pub fn find_books(book_name: String) -> Vec<BookSelect> {
+pub fn find_books(book_name: &str) -> Vec<BookSelect> {
     let conn = &mut open_connection();
     let like_value = format!("%{}%", book_name);
     books
