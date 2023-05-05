@@ -1,7 +1,7 @@
 use crate::command::Command;
-use crate::controller::insert;
+use crate::controller::Controller;
 use crate::guide::show_guide;
-use crate::view::add;
+use crate::view::View;
 use std::env;
 use std::process::exit;
 use std::str::FromStr;
@@ -28,10 +28,16 @@ fn main() {
             show_guide();
         }
         Ok(Command::Add) => {
-            let book = add();
-            let result = insert(book);
+            let book = View::get_book();
+            let result = Controller::insert(book);
             println!("{} kayıt eklendi", result);
         }
+        Ok(Command::Find(_)) => {
+            let name = arguments[2].as_str();
+            let books = Controller::find(name);
+            View::list(books);
+        }
+        Ok(Command::List(_)) => {}
         Err(e) => {
             println!("{}", e);
         }
