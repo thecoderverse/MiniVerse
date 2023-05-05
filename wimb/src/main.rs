@@ -32,6 +32,10 @@ fn main() {
             let result = Controller::insert(book);
             println!("{} kayıt eklendi", result);
         }
+        Ok(Command::All) => {
+            let books = Controller::get_all();
+            View::list(books);
+        }
         Ok(Command::Find(_)) => {
             let name = arguments[2].as_str();
             let books = Controller::find(name);

@@ -11,6 +11,9 @@ pub fn show_guide() {
         - 91 numaralı kitabı silmek için
         wimb -del 91
 
+        - tüm kitapları olduğu gibi listelemek için
+        wimb -all
+
         - kitapları adlarına göre tersten sıralamak ve ilk 25ini getirmek için
         wimb -list name desc 25
 
