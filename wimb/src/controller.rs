@@ -1,4 +1,5 @@
-use crate::db::{find_books, insert_book, load_all_books};
+use crate::command::ListCommand;
+use crate::db::{find_books, insert_book, load_all_books, load_books_by_order};
 use crate::model::{Book, BookInsert, BookSelect};
 
 pub struct Controller;
@@ -11,6 +12,11 @@ impl Controller {
 
     pub fn find(title: &str) -> Vec<Book> {
         let books = find_books(title);
+        Self::convert_books(books)
+    }
+
+    pub fn get_by_order(args: ListCommand) -> Vec<Book> {
+        let books = load_books_by_order(args);
         Self::convert_books(books)
     }
 

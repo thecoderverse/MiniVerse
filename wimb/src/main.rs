@@ -1,4 +1,4 @@
-use crate::command::Command;
+use crate::command::{Command, ListCommand};
 use crate::controller::Controller;
 use crate::guide::show_guide;
 use crate::view::View;
@@ -41,7 +41,21 @@ fn main() {
             let books = Controller::find(name);
             View::list(books);
         }
-        Ok(Command::List(_)) => {}
+        Ok(Command::List(_)) => {
+            //println!("Arguman sayısı {}", arguments.len());
+            if arguments.len() == 5 {
+                let statement = format!(
+                    "{} {} {}",
+                    arguments[2].as_str(),
+                    arguments[3].as_str(),
+                    arguments[4].as_str()
+                );
+                // println!("Statement {}", statement);
+                let cmd = ListCommand::from_str(&statement).expect("Komut anlaşılamadı");
+                let books = Controller::get_by_order(cmd);
+                View::list(books);
+            }
+        }
         Err(e) => {
             println!("{}", e);
         }
