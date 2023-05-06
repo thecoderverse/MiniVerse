@@ -36,12 +36,12 @@ fn main() {
             let books = Controller::get_all();
             View::list(books);
         }
-        Ok(Command::Find(_)) => {
+        Ok(Command::Find) => {
             let name = arguments[2].as_str();
             let books = Controller::find(name);
             View::list(books);
         }
-        Ok(Command::List(_)) => {
+        Ok(Command::List) => {
             //println!("Arguman sayısı {}", arguments.len());
             if arguments.len() == 5 {
                 let statement = format!(
@@ -56,7 +56,7 @@ fn main() {
                 View::list(books);
             }
         }
-        Ok(Command::Del(_)) => {
+        Ok(Command::Del) => {
             if let Ok(id) = i32::from_str(&arguments[2]) {
                 Controller::delete(id);
             }
