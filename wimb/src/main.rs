@@ -56,9 +56,13 @@ fn main() {
                 View::list(books);
             }
         }
+        Ok(Command::Del(_)) => {
+            if let Ok(id) = i32::from_str(&arguments[2]) {
+                Controller::delete(id);
+            }
+        }
         Err(e) => {
             println!("{}", e);
         }
-        _ => {}
     }
 }

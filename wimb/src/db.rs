@@ -1,9 +1,10 @@
 use crate::command::{ListCommand, Order};
 use crate::model::{BookInsert, BookSelect};
 use crate::schema::books::dsl::books;
-use crate::schema::books::{authors, publisher, title};
+use crate::schema::books::{authors, id, publisher, title};
 use diesel::{
-    Connection, ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection, TextExpressionMethods,
+    delete, Connection, ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection,
+    TextExpressionMethods,
 };
 use dotenvy::dotenv;
 use std::env;
@@ -85,4 +86,11 @@ pub fn find_books(book_name: &str) -> Vec<BookSelect> {
         .filter(title.like(like_value))
         .load::<BookSelect>(conn)
         .expect("Kitaplar bulunamadı")
+}
+
+pub fn delete_book(book_id: i32) {
+    let conn = &mut open_connection();
+    delete(books.filter(id.eq(book_id)))
+        .execute(conn)
+        .expect("Silme işleminde hata");
 }

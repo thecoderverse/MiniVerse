@@ -46,6 +46,7 @@ impl View {
         let ord = i16::from_str(order.trim()).expect("sayısal değer değil");
 
         let book = Book {
+            id: 0,
             title: book_name.trim().to_string(),
             authors,
             publisher: publisher.trim().to_string(),
@@ -56,7 +57,7 @@ impl View {
 
     pub fn list(books: Vec<Book>) {
         for book in books {
-            println!("{}, {}", book.title, book.location);
+            println!("[{}] - {}, {}", book.id, book.title, book.location);
         }
     }
 }

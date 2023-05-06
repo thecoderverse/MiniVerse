@@ -26,6 +26,7 @@ impl From<BookSelect> for Book {
         };
 
         Self {
+            id: value.id,
             title: value.title,
             publisher: value.publisher,
             location,
