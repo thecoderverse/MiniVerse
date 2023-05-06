@@ -49,15 +49,19 @@ wimb -add
 # 91 numaralı kitabı silmek için
 wimb -del 91
 # kitapları adlarına göre tersten sıralamak ve ilk 25ini getirmek için
-wimb -list name --desc 25
-# kitapları yayın tarihlerine göre sıralayıp ilk 10 dakini getirmek için
-wimb -list publish_date --asc 10
-# tüm kitapları adlarına göre sıralayarak getirmek için
-wimb -list name --asc *
+wimb -list name desc 25
+# kitapları yayıncı adlarına göre sıralayıp ilk 10 dakini getirmek için
+wimb -list publisher asc 10
 # adında 'rogramming rus' geçen kitapları getirmek için
 wimb -find "rograming rus"
 ```
 
 ## Çıktılar
 
-_**Eklenecek**_
+Örnek çalışma zamanı çıktıları şöyle.
+
+![./assets/runtime_01.png](./assets/runtime_01.png)
+
+![./assets/runtime_02.png](./assets/runtime_02.png)
+
+![./assets/runtime_03.png](./assets/runtime_03.png)

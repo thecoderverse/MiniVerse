@@ -1,7 +1,11 @@
+use crate::command::{ListCommand, Order};
 use crate::model::{BookInsert, BookSelect};
 use crate::schema::books::dsl::books;
-use crate::schema::books::title;
-use diesel::{Connection, QueryDsl, RunQueryDsl, SqliteConnection, TextExpressionMethods};
+use crate::schema::books::{authors, id, publisher, title};
+use diesel::{
+    delete, Connection, ExpressionMethods, QueryDsl, RunQueryDsl, SqliteConnection,
+    TextExpressionMethods,
+};
 use dotenvy::dotenv;
 use std::env;
 
@@ -27,6 +31,54 @@ pub fn load_all_books() -> Vec<BookSelect> {
         .expect("Kitaplar yüklenemedi")
 }
 
+pub fn load_books_by_order(args: ListCommand) -> Vec<BookSelect> {
+    let conn = &mut open_connection();
+    let count = args.count as i64;
+    match args.field_name.as_str() {
+        "title" => match args.order {
+            Order::Asc => books
+                .order(title.asc())
+                .limit(count)
+                .load::<BookSelect>(conn)
+                .expect("sorgulama hatası"),
+            Order::Desc => books
+                .order(title.desc())
+                .limit(count)
+                .load::<BookSelect>(conn)
+                .expect("sorgulama hatası"),
+        },
+        "authors" => match args.order {
+            Order::Asc => books
+                .order(authors.asc())
+                .limit(count)
+                .load::<BookSelect>(conn)
+                .expect("sorgulama hatası"),
+            Order::Desc => books
+                .order(authors.desc())
+                .limit(count)
+                .load::<BookSelect>(conn)
+                .expect("sorgulama hatası"),
+        },
+        "publisher" => match args.order {
+            Order::Asc => books
+                .order(publisher.asc())
+                .limit(count)
+                .load::<BookSelect>(conn)
+                .expect("sorgulama hatası"),
+            Order::Desc => books
+                .order(publisher.desc())
+                .limit(count)
+                .load::<BookSelect>(conn)
+                .expect("sorgulama hatası"),
+        },
+        _ => books
+            .order(title.asc())
+            .limit(count)
+            .load::<BookSelect>(conn)
+            .expect("sorgulama hatası"),
+    }
+}
+
 pub fn find_books(book_name: &str) -> Vec<BookSelect> {
     let conn = &mut open_connection();
     let like_value = format!("%{}%", book_name);
@@ -34,4 +86,11 @@ pub fn find_books(book_name: &str) -> Vec<BookSelect> {
         .filter(title.like(like_value))
         .load::<BookSelect>(conn)
         .expect("Kitaplar bulunamadı")
+}
+
+pub fn delete_book(book_id: i32) {
+    let conn = &mut open_connection();
+    delete(books.filter(id.eq(book_id)))
+        .execute(conn)
+        .expect("Silme işleminde hata");
 }
