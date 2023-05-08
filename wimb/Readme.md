@@ -64,4 +64,8 @@ wimb -find "rograming rus"
 
 ![./assets/runtime_02.png](./assets/runtime_02.png)
 
-![./assets/runtime_03.png](./assets/runtime_03.png)
+Listeleme görünümünün güncelleştirilmiş hali sonrası çalışma zamanı aşağıdaki gibidir.
+
+![./assets/runtime_04.png](./assets/runtime_04.png)
+
+![./assets/runtime_05.png](./assets/runtime_05.png)
