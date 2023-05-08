@@ -69,3 +69,42 @@ Listeleme görünümünün güncelleştirilmiş hali sonrası çalışma zamanı
 ![./assets/runtime_04.png](./assets/runtime_04.png)
 
 ![./assets/runtime_05.png](./assets/runtime_05.png)
+
+## Kod Tabanı ile Çalışacaklar İçin
+
+Eğer kod tabanını indirip çalışmayı planlıyorsanız belki veritabanını sıfırdan oluşturmanız gerekebilir. Örnek Sqlite veritabanını kullanmaktadır. Bu tip bir çözüm için yeterlidir. Veritabanı içeriğinin ilgili veri yapıları ile otomatik oluşturulabilmesi için diesel_cli aracından yararlanılabilir.
+
+```bash
+# diesel_cli aracını yüklemek için
+cargo install diesel_cli --no-default-features --features sqlite
+```
+
+### Veritabanı oluşturma ve Migration İşleri
+
+Aşağıdaki adımlarla devam edip ilk migration planını çalıştırabiliriz. Ancak öncesinde root klasörde .env uzantılı bir dosya açıp içerisine veritabanı bağlantı bilgisini yazmalıyız. Ben veritabanı dosyasını tutmak için Data isimli bir klasör oluşturdum ve .env dosyası içerisinde aşağıdaki içeriği kullandım.
+
+```text
+DATABASE_URL=./Data/library.db
+```
+
+Migration hazırlıkları için,
+
+```bash
+diesel setup
+diesel migration generate initiate_db
+```
+
+Bu komutlar migrations klasöründe tarih bilgisinin kullanıldığı bir klasör oluşturup içerisine up ve down isimli sql dosyalarını bırakır. Buraya yazılan SQL komutları migration upgrate ve downgrade operasyonlarında kullanılır. up.sql ve down.sql dosyalarını tamamladıktan sonra aşağıdaki komut ile migration planı işletilir.
+
+```bash
+diesel migration run
+```
+
+Terminalden tabloların oluşup oluşmadığını kontrol etmek için aşağıdaki işlemleri yapabiliriz.
+
+```bash
+sqlite3 ./Data/library.db
+.tables
+select * from books;
+.exit
+```
