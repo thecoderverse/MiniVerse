@@ -7,6 +7,7 @@ use std::process::exit;
 use std::str::FromStr;
 
 mod command;
+mod constants;
 mod controller;
 mod db;
 mod guide;
