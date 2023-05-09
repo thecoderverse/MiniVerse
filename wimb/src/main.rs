@@ -1,4 +1,4 @@
-use crate::command::Command;
+use crate::command::{Command, ListCommand};
 use crate::controller::Controller;
 use crate::guide::show_guide;
 use crate::view::View;
@@ -7,6 +7,7 @@ use std::process::exit;
 use std::str::FromStr;
 
 mod command;
+mod constants;
 mod controller;
 mod db;
 mod guide;
@@ -36,15 +37,33 @@ fn main() {
             let books = Controller::get_all();
             View::list(books);
         }
-        Ok(Command::Find(_)) => {
+        Ok(Command::Find) => {
             let name = arguments[2].as_str();
             let books = Controller::find(name);
             View::list(books);
         }
-        Ok(Command::List(_)) => {}
+        Ok(Command::List) => {
+            //println!("Arguman sayısı {}", arguments.len());
+            if arguments.len() == 5 {
+                let statement = format!(
+                    "{} {} {}",
+                    arguments[2].as_str(),
+                    arguments[3].as_str(),
+                    arguments[4].as_str()
+                );
+                // println!("Statement {}", statement);
+                let cmd = ListCommand::from_str(&statement).expect("Komut anlaşılamadı");
+                let books = Controller::get_by_order(cmd);
+                View::list(books);
+            }
+        }
+        Ok(Command::Del) => {
+            if let Ok(id) = i32::from_str(&arguments[2]) {
+                Controller::delete(id);
+            }
+        }
         Err(e) => {
             println!("{}", e);
         }
-        _ => {}
     }
 }

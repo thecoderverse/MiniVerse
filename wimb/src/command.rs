@@ -9,11 +9,11 @@ pub enum Command {
     /// Tüm kitapları listelemek için
     All,
     /// Id değerine göre kitap silme
-    Del(u32),
+    Del,
     /// Kitapları listeleme
-    List(ListCommand),
+    List,
     /// Girilen kitabı arama
-    Find(String),
+    Find,
     /// Nasıl kullanıldığı ile ilgili yardım içeriği
     Help,
 }
@@ -24,10 +24,10 @@ impl FromStr for Command {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
             "-add" => Ok(Command::Add),
-            "-list" => Ok(Command::List(ListCommand::default())),
+            "-list" => Ok(Command::List),
             "-all" => Ok(Command::All),
-            "-del" => Ok(Command::Del(u32::default())),
-            "-find" => Ok(Command::Find(String::new())),
+            "-del" => Ok(Command::Del),
+            "-find" => Ok(Command::Find),
             "-help" => Ok(Command::Help),
             _ => Err(ParseError::Command),
         }

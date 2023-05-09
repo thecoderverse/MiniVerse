@@ -1,3 +1,4 @@
+use crate::constants::*;
 use crate::model::{Author, Book, Location};
 use std::io::stdin;
 use std::str::FromStr;
@@ -46,6 +47,7 @@ impl View {
         let ord = i16::from_str(order.trim()).expect("sayısal değer değil");
 
         let book = Book {
+            id: 0,
             title: book_name.trim().to_string(),
             authors,
             publisher: publisher.trim().to_string(),
@@ -55,8 +57,25 @@ impl View {
     }
 
     pub fn list(books: Vec<Book>) {
+        let line = "-".repeat(LINE_REPEAT_COUNT);
+        let space = " ".repeat(SPACE_REPEAT_COUNT);
+        println!("|{}|", line);
+        println!("|id{0}|title{0}{0}{0}{0}{0}{0}{0}|location{0}|", space);
+        println!("|{}|", line);
+
         for book in books {
-            println!("{}, {}", book.title, book.location);
+            let id_len = ID_COLUMN_LEN - book.id.to_string().len();
+            let id_margin = " ".repeat(id_len);
+            let title_len = TITLE_COLUMN_LEN - book.title.chars().count();
+            let title_margin = " ".repeat(title_len);
+            let loc_len = LOC_COLUMN_LEN - book.location.to_string().chars().count();
+            let loc_margin = " ".repeat(loc_len);
+            println!(
+                "|{}{}|{}{}|{}{}|",
+                book.id, id_margin, book.title, title_margin, book.location, loc_margin
+            );
+            //println!("|  {0}|     {0}{0}{0}{0}{0}{0}{0}|        {0}|", space);
+            println!("|{}|", line);
         }
     }
 }

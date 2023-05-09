@@ -12,6 +12,7 @@ pub struct Location {
 pub struct Author(pub String);
 
 pub struct Book {
+    pub id: i32,
     pub title: String,
     pub authors: Vec<Author>,
     pub publisher: String,
@@ -33,6 +34,7 @@ impl Display for Location {
 impl Book {
     pub fn new(title: String, authors: Vec<Author>, publisher: String, location: Location) -> Self {
         Self {
+            id: 0,
             title,
             authors,
             publisher,
