@@ -12,6 +12,7 @@
 - [ ] __Satisaction__ Futuresite projesinin Github Actions kullanarak CI/CD süreçlerini otomatikleştirme çalışması. (Ve bunun yapımı hakkında bir session oluşturup Github Actions'ı ve CI/CD süreçlerini topluluğa aktarmak.)
 - [ ] __TomatoVerse__ Sınav süreçlerinde kullanmaya alışacağımız sonrasında ise kütüphane ortamı gibi buluşup pomodoro tekniği ile ortak çalışacağımız bir Discord kanalı oluşturmak ve burada süreyi otomatize etmek için bir Discord botu yazmak.
 - [x] __glip__ Lorem Picsum rest servislerini kullanarak bilgisayar fotoğraf/fotoğraflar indiren RUST tabanlı terminal uygulaması.
+- [ ] __BusrasAgileTips__ Büşra'nın Agile İpuçları. Çevik metodolojilerle ilgili kısa pratik bilgiler dönen basit bir REST servis.
 
 ## Katılım
 Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
