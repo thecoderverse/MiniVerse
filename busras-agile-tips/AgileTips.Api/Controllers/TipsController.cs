@@ -35,7 +35,7 @@ public class TipsController
     [HttpGet("List")]
     public IActionResult GetByScope(int scopeId)
     {
-        var tips = _dbContext.Tips.Include(t=>t.Scope).Where(c => c.Scope.Id == scopeId);
+        var tips = _dbContext.Tips.Include(t => t.Scope).Where(c => c.Scope.Id == scopeId);
         if (tips == null)
         {
             return NotFound();
@@ -46,9 +46,14 @@ public class TipsController
     [HttpGet("Daily")]
     public IActionResult GetRandom()
     {
-        var result = _dbContext
-                    .Tips
-                    .Where(t => t.Id == 1);
+        Random rand = new Random();
+        int skipper = rand.Next(0, _dbContext.Tips.Count());
+
+        var result= _dbContext
+            .Tips
+            .Skip(skipper)
+            .Take(1)
+            .Single();
 
         if (result == null)
         {
