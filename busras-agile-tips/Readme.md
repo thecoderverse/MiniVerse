@@ -19,4 +19,8 @@ dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
 dotnet tool install -g dotnet-ef
 # güncelleme için
 dotnet tool update -g dotnet-ef
+
+# Migration planlarını çalıştırmak için
+dotnet ef migrations add InitialCreate
+dotnet ef database update
 ```
