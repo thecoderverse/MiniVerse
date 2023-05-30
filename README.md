@@ -14,6 +14,7 @@
 - [x] __glip__ Lorem Picsum rest servislerini kullanarak bilgisayar fotoğraf/fotoğraflar indiren RUST tabanlı terminal uygulaması.
 - [ ] __BusrasAgileTips__ Büşra'nın Agile İpuçları. Çevik metodolojilerle ilgili kısa pratik bilgiler dönen basit bir REST servis.
 - [x] __IMDbReviews__ IMDb inceleme datasının duygu analizini Matlab'deki Text Analytics Toolbox aracıyla kolaylıkla gerçekleştirebileceğiniz bir proje.
+- [x] __DetectEmail__ Support Vector Machine kullanarak maillerin spam olup olmadığını tespit eden bir proje.
 ## Katılım
 Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
 
