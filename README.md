@@ -13,7 +13,7 @@
 - [ ] __TomatoVerse__ Sınav süreçlerinde kullanmaya alışacağımız sonrasında ise kütüphane ortamı gibi buluşup pomodoro tekniği ile ortak çalışacağımız bir Discord kanalı oluşturmak ve burada süreyi otomatize etmek için bir Discord botu yazmak.
 - [x] __glip__ Lorem Picsum rest servislerini kullanarak bilgisayar fotoğraf/fotoğraflar indiren RUST tabanlı terminal uygulaması.
 - [ ] __BusrasAgileTips__ Büşra'nın Agile İpuçları. Çevik metodolojilerle ilgili kısa pratik bilgiler dönen basit bir REST servis.
-- [x] __IMBDReviews__ IMBD inceleme datasının duygu analizini Matlab'deki Text Analytics Toolbox aracıyla kolaylıkla gerçekleştirebileceğiniz bir proje.
+- [x] __IMDbReviews__ IMDb inceleme datasının duygu analizini Matlab'deki Text Analytics Toolbox aracıyla kolaylıkla gerçekleştirebileceğiniz bir proje.
 ## Katılım
 Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
 
