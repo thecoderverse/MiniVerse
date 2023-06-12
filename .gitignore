@@ -27,3 +27,4 @@ obj/*
 # Added by cargo
 
 /target
+/.vs
