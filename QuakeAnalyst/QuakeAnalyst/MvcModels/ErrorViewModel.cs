@@ -1,4 +1,4 @@
-namespace QuakeAnalyst.Models
+namespace QuakeAnalyst.MvcModels
 {
     public class ErrorViewModel
     {

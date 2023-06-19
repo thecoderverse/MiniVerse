@@ -2,7 +2,9 @@
 using Newtonsoft.Json;
 using NLog;
 using QuakeAnalyst.Repo;
+using System.Collections.Generic;
 using System.Text.Json.Nodes;
+using static System.Net.WebRequestMethods;
 
 namespace QuakeAnalyst.ApiService
 {
@@ -10,29 +12,34 @@ namespace QuakeAnalyst.ApiService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         string _geoLocationsQueryString = "https://api.orhanaydogdu.com.tr/deprem/statics/cities";
-        List<GeoLocation> _geoLocations = new List<GeoLocation>();
+        List<City> _geoLocations = new List<City>();
         DateTime _lastGeoLocationUpdate = DateTime.MinValue;
         TimeSpan _validUpdateSpan = new TimeSpan(1,0,0,0);
         public OrhanAydogduApiHandler()
         {
             QueryGeoLocations();
         }
-        public async Task<List<GeoLocation>> GetGeoLocations()
+        public async Task<List<City>> GetCities()
         {
             bool res;
             bool isDataAvailable = _geoLocations?.Count > 0;
             bool isDataUpToDate = (DateTime.Now - _lastGeoLocationUpdate) > _validUpdateSpan;
             if(isDataAvailable && isDataUpToDate)
             {
-                return _geoLocations ?? new List<GeoLocation>(); 
+                return _geoLocations ?? new List<City>(); 
             }
             else
             {
                 res = await QueryGeoLocations();
             }
-            return _geoLocations ?? new List<GeoLocation>();
+            return _geoLocations ?? new List<City>();
         }
 
+        public async Task<List<Earthquake>> GetEarthquakes(DateTime fromDate, DateTime toDate)
+        {
+            List<Earthquake> earthquakes = await QueryEarthquakeData(fromDate, toDate);
+            return earthquakes;
+        }
         private async Task<bool> QueryGeoLocations()
         {
             HttpClient client = new HttpClient();
@@ -42,11 +49,11 @@ namespace QuakeAnalyst.ApiService
                 response.EnsureSuccessStatusCode();
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                CityQueryResult qResult = JsonConvert.DeserializeObject<CityQueryResult>(responseBody);
+                QueryResult<List<City>> qResult = JsonConvert.DeserializeObject<QueryResult<List<City>>>(responseBody);
                 if (qResult is null)
-                {
+                {                    
+                    _logger.Info($"City list returned empty from the api endpoint. HTTP Request was : {_geoLocationsQueryString}");
                     return false;
-                    _logger.Info($"GeoLocation list returned empty from the api endpoint. HTTP Request was : {_geoLocationsQueryString}");
                 }
                 _geoLocations = qResult.result;
                 _lastGeoLocationUpdate = DateTime.Now;
@@ -60,14 +67,30 @@ namespace QuakeAnalyst.ApiService
             }
            
         }
+
+        private string EarthquakeQueryString(DateTime fromDate, DateTime toDate)
+        {
+            return $"https://api.orhanaydogdu.com.tr/deprem/kandilli/archive?date={fromDate.Year}-{fromDate.Month}-{fromDate.Day}&date_end={toDate.Year}-{toDate.Month}-{toDate.Day}";
+        }
+        private async Task<List<Earthquake>> QueryEarthquakeData(DateTime fromDate, DateTime toDate)
+        {
+            HttpClient client = new HttpClient();
+            string query = EarthquakeQueryString(fromDate, toDate);
+            using HttpResponseMessage response = await client.GetAsync(_geoLocationsQueryString);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            var qResult = JsonConvert.DeserializeObject<QueryResult<List<Earthquake>>>(responseBody);
+            return qResult.result;
+        }
     }
 
-    public class CityQueryResult
+    public class QueryResult<T>
     {
         public bool status;
         public int httpStatus;
         public int serverloadms;
         public string desc;
-        public List<GeoLocation> result;
+        public T result;
     }
+
 }

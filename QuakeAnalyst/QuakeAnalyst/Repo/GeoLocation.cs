@@ -1,15 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
+using System;
+using System.Security.Cryptography.X509Certificates;
 
-namespace QuakeAnalyst.Repo
+public class Geolocation
 {
-    public class GeoLocation
-    {
-        [JsonProperty("city")]
-        public string Name { get; set; }
-        [JsonProperty("cityCode")]
-        public int CityCode { get; set; }
-        [JsonProperty("population")]
-        public int? Populations { get; set; }
-    }
+    [JsonProperty("type")]
+    public string Type { get; set; }
+    [JsonProperty("coordinates")]
+    public Coordinates Coordinates { get; set; }
 }

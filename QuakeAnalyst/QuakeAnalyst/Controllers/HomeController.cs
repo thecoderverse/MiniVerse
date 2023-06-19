@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using QuakeAnalyst.ApiService;
-using QuakeAnalyst.Models;
+using QuakeAnalyst.MvcModels;
 using System.Diagnostics;
 
 namespace QuakeAnalyst.Controllers
@@ -28,7 +28,22 @@ namespace QuakeAnalyst.Controllers
         public async Task<IActionResult> GeoLocations()
         {
             var model = new GeoLocationsModel();
-            model.GeoLocations = await _apiHandler.GetGeoLocations();
+            model.GeoLocations = await _apiHandler.GetCities();
+            return View(model);
+        }
+
+        public ActionResult EarthQuakes()
+        {
+            var model = new EarthquakesModel();
+            return View(model);
+        }
+
+        [HttpGet("fromDay")]
+        public async Task<IActionResult> EarthQuakes(string fromDay, stringtoDay)
+        {
+            var model = new EarthquakesModel();
+            DateTime.Parse(fromDay)
+            model.Earthquakes = await _apiHandler.GetEarthquakes(fromDay, toDay);
             return View(model);
         }
 
