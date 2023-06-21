@@ -39,11 +39,13 @@ namespace QuakeAnalyst.Controllers
         }
 
         [HttpGet("fromDay")]
-        public async Task<IActionResult> EarthQuakes(string fromDay, stringtoDay)
+        public async Task<IActionResult> EarthQuakes(string fromDay, string toDay)
         {
             var model = new EarthquakesModel();
-            DateTime.Parse(fromDay)
-            model.Earthquakes = await _apiHandler.GetEarthquakes(fromDay, toDay);
+            var from = DateTime.Parse(fromDay);
+            var to = DateTime.Parse(toDay);
+
+            model.Earthquakes = await _apiHandler.GetEarthquakes(from, to);
             return View(model);
         }
 
