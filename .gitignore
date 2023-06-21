@@ -28,9 +28,6 @@ obj/*
 
 # Added by QuakeAnalyst
 /target
-/.vs
+.vs
 [Bb]in/
 [Oo]bj/
-/QuakeAnalyst/QuakeAnalyst/bin/Debug/net6.0
-/QuakeAnalyst/.vs/QuakeAnalyst
-/QuakeAnalyst/.vs/QuakeAnalyst
