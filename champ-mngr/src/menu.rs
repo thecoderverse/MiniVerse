@@ -34,7 +34,28 @@ pub fn load_menu() -> MenuController {
                     entry_builder
                         .code('Z')
                         .text("Zorluk Seviyesi")
-                        .callback(|event, _| println!("{:?}", event))
+                        .callback(|event, controller| controller.expand(event.entry_id))
+                        .add_subentry(|mut entry_builder| {
+                            entry_builder
+                                .code('E')
+                                .text("Kolay")
+                                .callback(|event, _| println!("{:?}", event))
+                                .build()
+                        })
+                        .add_subentry(|mut entry_builder| {
+                            entry_builder
+                                .code('M')
+                                .text("Orta")
+                                .callback(|event, _| println!("{:?}", event))
+                                .build()
+                        })
+                        .add_subentry(|mut entry_builder| {
+                            entry_builder
+                                .code('H')
+                                .text("Zor")
+                                .callback(|event, _| println!("{:?}", event))
+                                .build()
+                        })
                         .build()
                 })
                 .build()
