@@ -31,15 +31,15 @@ namespace QuakeAnalyst.Controllers
             model.GeoLocations = await _apiHandler.GetCities();
             return View(model);
         }
-
+        [HttpGet]
         public ActionResult EarthQuakes()
         {
             var model = new EarthquakesModel();
             return View(model);
         }
 
-        [HttpGet("fromDay")]
-        public async Task<IActionResult> EarthQuakes(string fromDay, string toDay)
+        [HttpGet]
+        public async Task<IActionResult> EarthQuakes([FromUri] string fromDay, [FromUri] string toDay)
         {
             var model = new EarthquakesModel();
             var from = DateTime.Parse(fromDay);
