@@ -26,5 +26,8 @@ obj/*
 
 # Added by cargo
 
+# Added by QuakeAnalyst
 /target
-/.vs
+.vs
+[Bb]in/
+[Oo]bj/

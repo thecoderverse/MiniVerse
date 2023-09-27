@@ -1,0 +1,27 @@
+﻿@using QuakeAnalyst.Repo
+@Model = GeoLocationsModel;
+@{
+    ViewData["Title"] = "GeoLocations";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>GeoLocations are the defined geographic locations especially cities.</p>
+
+
+<table>
+    <captio>Locations</captio>
+    <tr>
+        <th>Name</th>
+        <th>CityCode</th>
+        <th>Population</th>
+    </tr>
+    @foreach (City location in Model.GeoLocations)
+    {
+        <tr>
+            <td>@location.Name</td>
+            <td>@location.CityCode</td>
+            <td>@location.Populations</td>
+        </tr>
+    }
+</table>
