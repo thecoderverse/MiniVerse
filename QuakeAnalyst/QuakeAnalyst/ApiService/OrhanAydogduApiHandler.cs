@@ -8,7 +8,7 @@ using static System.Net.WebRequestMethods;
 
 namespace QuakeAnalyst.ApiService
 {
-    public class OrhanAydogduApiHandler
+    public class OrhanAydogduApiHandler : IEarthquakeApiService
     {
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
         string _geoLocationsQueryString = "https://api.orhanaydogdu.com.tr/deprem/statics/cities";
@@ -70,27 +70,25 @@ namespace QuakeAnalyst.ApiService
 
         private string EarthquakeQueryString(DateTime fromDate, DateTime toDate)
         {
-            return $"https://api.orhanaydogdu.com.tr/deprem/kandilli/archive?date={fromDate.Year}-{fromDate.Month}-{fromDate.Day}&date_end={toDate.Year}-{toDate.Month}-{toDate.Day}";
+            return $"https://api.orhanaydogdu.com.tr/deprem/kandilli/archive?date={fromDate.Year}-{fromDate.Month:D2}-{fromDate.Day:D2}&date_end={toDate.Year}-{toDate.Month:D2}-{toDate.Day:D2}";
         }
         private async Task<List<Earthquake>> QueryEarthquakeData(DateTime fromDate, DateTime toDate)
         {
             HttpClient client = new HttpClient();
             string query = EarthquakeQueryString(fromDate, toDate);
-            using HttpResponseMessage response = await client.GetAsync(_geoLocationsQueryString);
+            using HttpResponseMessage response = await client.GetAsync(query);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             var qResult = JsonConvert.DeserializeObject<QueryResult<List<Earthquake>>>(responseBody);
             return qResult.result;
         }
+        class QueryResult<T>
+        {
+            public bool status;
+            public int httpStatus;
+            public int serverloadms;
+            public string desc;
+            public T result;
+        }
     }
-
-    public class QueryResult<T>
-    {
-        public bool status;
-        public int httpStatus;
-        public int serverloadms;
-        public string desc;
-        public T result;
-    }
-
 }

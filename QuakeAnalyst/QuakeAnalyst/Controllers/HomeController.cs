@@ -8,9 +8,9 @@ namespace QuakeAnalyst.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly OrhanAydogduApiHandler _apiHandler;
+        private readonly IEarthquakeApiService _apiHandler;
 
-        public HomeController(ILogger<HomeController> logger, OrhanAydogduApiHandler ApiHandler)
+        public HomeController(ILogger<HomeController> logger, IEarthquakeApiService ApiHandler)
         {
             _logger = logger;
             _apiHandler = ApiHandler;
@@ -32,20 +32,23 @@ namespace QuakeAnalyst.Controllers
             return View(model);
         }
 
-        public ActionResult EarthQuakes()
-        {
-            var model = new EarthquakesModel();
-            return View(model);
-        }
+        //public ActionResult EarthQuakes()
+        //{
+        //    var model = new EarthquakesModel();
+        //    return View(model);
+        //}
 
-        [HttpGet("fromDay")]
+
         public async Task<IActionResult> EarthQuakes(string fromDay, string toDay)
-        {
+        {            
             var model = new EarthquakesModel();
-            var from = DateTime.Parse(fromDay);
-            var to = DateTime.Parse(toDay);
+            if(fromDay != null && toDay != null)
+            {
+                var from = DateTime.Parse(fromDay);
+                var to = DateTime.Parse(toDay);
 
-            model.Earthquakes = await _apiHandler.GetEarthquakes(from, to);
+                model.Earthquakes = await _apiHandler.GetEarthquakes(from, to);
+            }            
             return View(model);
         }
 

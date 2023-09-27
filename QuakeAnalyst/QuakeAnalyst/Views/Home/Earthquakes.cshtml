@@ -16,8 +16,22 @@
     <input type="submit">
 </form>
 
-<p>Here is the earthquakse:</p>
-@foreach (Earthquake quake in Model.Earthquakes)
-{
 
-}
+<table>
+    <caption>Here is the earthquakse:</caption>
+    <tr>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Magnitute</th>
+        <th>Depth</th>
+    </tr>
+    @foreach (Earthquake quake in Model.Earthquakes)
+    {
+        <tr>
+            <td>@quake.Title</td>
+            <td>@quake.Date</td>
+            <td>@quake.Magnitude</td>
+            <td>@quake.Depth</td>
+        </tr>
+    }
+</table>

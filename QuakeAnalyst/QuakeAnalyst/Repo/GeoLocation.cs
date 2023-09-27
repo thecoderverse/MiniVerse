@@ -2,10 +2,11 @@
 using System;
 using System.Security.Cryptography.X509Certificates;
 
+
 public class Geolocation
 {
     [JsonProperty("type")]
     public string Type { get; set; }
     [JsonProperty("coordinates")]
-    public Coordinates Coordinates { get; set; }
+    public double[] Coordinates { get; set; } = new double[2];
 }
