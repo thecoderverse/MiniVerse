@@ -15,7 +15,8 @@
 - [ ] __BusrasAgileTips__ Büşra'nın Agile İpuçları. Çevik metodolojilerle ilgili kısa pratik bilgiler dönen basit bir REST servis.
 - [x] __IMDbReviews__ IMDb inceleme datasının duygu analizini Matlab'deki Text Analytics Toolbox aracıyla kolaylıkla gerçekleştirebileceğiniz bir proje.
 - [x] __DetectEmail__ Support Vector Machine kullanarak maillerin spam olup olmadığını tespit eden bir proje.
-- [ ] __QuakeAnalyst__ Develop an interface app that queries data using Kandilli api server (https://github.com/orhanayd/kandilli-rasathanesi-api) and visualize data with charts (ex. densty of ocurance based on hours a day)
+- [ ] __QuakeAnalyst__ Kandilli api sunucusunu (https://github.com/orhanayd/kandilli-rasathanesi-api) kullanarak veri sorgulayan ve verileri grafiklerle görselleştiren bir arayüz uygulaması geliştirelim (örn. günde saat bazında çalışma süresi)
+- [x] __FileEncrypter__ Github 2FA doğruama sistemine geçtiğinde sunmuş olduğu özel anahtarı şifreleyerek drive içinde tutabilmemizi sağlayacak bir şifreleyici yapalım.
 ## Katılım
 Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
 

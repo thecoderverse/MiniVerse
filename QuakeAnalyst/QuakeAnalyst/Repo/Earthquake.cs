@@ -18,5 +18,7 @@ namespace QuakeAnalyst.Repo
         public double Depth { get; set; }
         [JsonProperty("geoJson")]
         public Geolocation Geolocation { get; set; }
+        [JsonProperty("location_properties")]
+        public LocationProperties LocationProperties { get; set; }
     }
 }

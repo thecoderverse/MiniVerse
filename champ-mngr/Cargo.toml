@@ -1,0 +1,9 @@
+[package]
+name = "champ-mngr"
+version = "0.1.0"
+edition = "2021"
+description = "Terminalden çalışan basit bir menejerlik oyunu"
+authors = ["The CoderVerse"]
+
+[dependencies]
+colorized = "1.0.0"
