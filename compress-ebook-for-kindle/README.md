@@ -24,7 +24,7 @@ This script is designed to reduce the file size of documents before sending them
 ```bash
 input_path = '/content/gdrive/MyDrive/Colab Notebooks/Books/NonCompress/test-book.mobi'
 output_dir = '/content/gdrive/MyDrive/Colab Notebooks/Books/Compress/'
-output_filename = 'asilacakkadin-compress.mobi'
+output_filename = 'test-book-compress.mobi'
 reduction_percentage = 20
 
 compress(input_path, output_dir, output_filename, reduction_percentage)
