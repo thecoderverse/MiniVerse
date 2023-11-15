@@ -1,5 +1,6 @@
-# Colab Compression Script
+# Compress Ebook For Kindle
 
+![image](https://github.com/KardelRuveyda/compress-ebook-kindle/assets/33912144/729ae041-e0b1-45ae-b917-603f67e1711d)
 
 ## Overview
 
@@ -23,11 +24,19 @@ This script is designed to reduce the file size of documents before sending them
 ```bash
 input_path = '/content/gdrive/MyDrive/Colab Notebooks/Books/NonCompress/test-book.mobi'
 output_dir = '/content/gdrive/MyDrive/Colab Notebooks/Books/Compress/'
-output_filename = 'test-book-compress.mobi'
+output_filename = 'asilacakkadin-compress.mobi'
 reduction_percentage = 20
 
 compress(input_path, output_dir, output_filename, reduction_percentage)
 ```
+
+## Input
+![image](https://github.com/KardelRuveyda/compress-ebook-kindle/assets/33912144/1e184ca6-b611-4e79-b0ed-6a29f53202ec)
+
+## Output
+
+![image](https://github.com/KardelRuveyda/compress-ebook-kindle/assets/33912144/f0809782-90b3-4926-ac35-cbc926cf7455)
+
 
 ### Notes
 
