@@ -18,6 +18,7 @@
 - [ ] __QuakeAnalyst__ Kandilli api sunucusunu (https://github.com/orhanayd/kandilli-rasathanesi-api) kullanarak veri sorgulayan ve verileri grafiklerle görselleştiren bir arayüz uygulaması geliştirelim (örn. günde saat bazında çalışma süresi)
 - [x] __FileEncrypter__ Github 2FA doğruama sistemine geçtiğinde sunmuş olduğu özel anahtarı şifreleyerek drive içinde tutabilmemizi sağlayacak bir şifreleyici yapalım.
 - [x] __CompressEbookForKindle__ Kindle cihazlarına e-posta ile göndermeden önce belge boyutlarını küçültmek için faydalı bir geliştirme çünkü Kindle cihazınıza e-posta yoluyla kitap göndermek istediğinizde eğer belirli bir boyutu aşarsa "Drive" linki olarak gönderiliyor. Kindle da bu linki kabul etmediği için .mob veya .epub tipindeki belgelerin boyutlarını küçültebileceğiniz bir python script'i. Vee sadece Colab'da çalıştırmanız yeterli!
+- [x] __notes-server__ Kitaplardan, dergilerden, internet sitelerinden topladığımız bazı bilgileri gösteren, yenilerinin eklenmesini sağlayan çok basit bir web hizmeti için giriş niteliğindeki projedir. Uygulama bir web sayfası sunar ve sayfa her yenilendiğinde derlenmiş bilgilerden rastgele bir tanesini ekrana getirir. İstenirse yeni bilgiler de eklenebilir.
 
 ## Katılım
 Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
