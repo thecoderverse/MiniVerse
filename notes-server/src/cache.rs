@@ -27,11 +27,9 @@ pub async fn update_cache_if_needed() -> Arc<Mutex<Option<NotesCache>>> {
     match *cache {
         Some(ref cache) if cache.last_modified >= last_modified => Arc::clone(&CACHED_NOTES),
         _ => {
-            println!("Reading to cache");
             let mut file = File::open(path).await.unwrap();
             let mut contents = String::new();
             file.read_to_string(&mut contents).await.unwrap();
-            println!("Notes {}",contents);
             let notes: Vec<Note> = from_str(&contents).unwrap();
             *cache = Some(NotesCache {
                 notes,
