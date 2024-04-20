@@ -16,3 +16,30 @@ sudo docker run -d -p 5556:5555 notes-server
 # Eğer makine her başlatıldığında bu servis aktif olarak çalışsın istiyorsak aşağıdaki komutu da kullanabiliriz
 sudo docker run -d --restart always -p 5556:5555 notes-server
 ```
+
+## Servis Olarak Çalıştırma
+
+Uygulamayı servis olarak çalıştırmak için aşağıdaki komutları kullanabiliriz.
+
+```bash
+# Servis olarak çalıştırmak için öncelikle uygulamayı çalıştırmamız gerekmektedir.
+cargo run
+````
+
+## Uygulamayı Görüntüleme
+
+```bash
+# Uygulama başarılı bir şekilde çalıştırıldıysa aşağıdaki gibi bir çıktı almalıyız.
+# Tarayıcıdan http://localhost:5555 adresine giderek uygulamayı görebiliriz.
+
+Server is running on http://localhost:5555
+Routes:
+- GET /
+- GET /note
+```
+
+## Uygulamayı Durdurma
+
+```bash
+# Uygulamayı durdurmak için terminalde CTRL + C tuşlarına basabiliriz.
+```
