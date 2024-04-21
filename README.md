@@ -19,6 +19,7 @@
 - [x] __FileEncrypter__ Github 2FA doğruama sistemine geçtiğinde sunmuş olduğu özel anahtarı şifreleyerek drive içinde tutabilmemizi sağlayacak bir şifreleyici yapalım.
 - [x] __CompressEbookForKindle__ Kindle cihazlarına e-posta ile göndermeden önce belge boyutlarını küçültmek için faydalı bir geliştirme çünkü Kindle cihazınıza e-posta yoluyla kitap göndermek istediğinizde eğer belirli bir boyutu aşarsa "Drive" linki olarak gönderiliyor. Kindle da bu linki kabul etmediği için .mob veya .epub tipindeki belgelerin boyutlarını küçültebileceğiniz bir python script'i. Vee sadece Colab'da çalıştırmanız yeterli!
 - [x] __notes-server__ Kitaplardan, dergilerden, internet sitelerinden topladığımız bazı bilgileri gösteren, yenilerinin eklenmesini sağlayan çok basit bir web hizmeti için giriş niteliğindeki projedir. Uygulama bir web sayfası sunar ve sayfa her yenilendiğinde derlenmiş bilgilerden rastgele bir tanesini ekrana getirir. İstenirse yeni bilgiler de eklenebilir.
+- [ ] __image-processing__ Rust programlama dili ile resim işleme uygulamaları geliştirebileceğiniz bir proje. Örneğin, resimler üzerinde filtreleme, döndürme, boyutlandırma, kesme gibi işlemler yapabilabilir. Örneğin bir football maçı fotoğrafı üzerinde oyuncuların yüzlerini tanıyarak kimin hangi takıma ait olduğunu belirleyebilirsiniz.
 
 ## Katılım
 Katkıda bulunmak için lütfen [CONTRIBUTING](CONTRIBUTING.md) dosyasındaki adımları takip edin.
