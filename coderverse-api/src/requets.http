@@ -1,0 +1,17 @@
+// Start the server
+curl -X GET http://localhost:8000
+
+// Members
+curl -X GET http://localhost:8000/members
+
+// Member by ID
+curl -X GET http://localhost:8000/members/1 
+
+// Add member
+curl -X POST http://localhost:8000/members -d '{"name": "John Doe", "email": "asdasd@asdasd.com"}' -H "Content-Type: application/json"
+
+// Update member
+curl -X PUT http://localhost:8000/members/1 -d '{"name": "John Doe", "email": "asd@asd.com"}' -H "Content-Type: application/json"
+
+// Delete member
+curl -X DELETE http://localhost:8000/members/1
